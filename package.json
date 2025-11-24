@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "start:db": "npx json-server ./.bin/db.json",
     "build": "react-router build",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
