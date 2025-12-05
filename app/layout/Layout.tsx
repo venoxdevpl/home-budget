@@ -2,11 +2,10 @@ import { NavLink, Outlet } from "react-router";
 import { LayoutDashboard, Receipt, FolderOpen, Wallet } from "lucide-react";
 
 export function Layout() {
-    const navLinkClass = ({ isActive }: { isActive: boolean }) => {
-        return `
-            flex items-center gap-2 py-2 rounded-lg transition-colors ${isActive ? "bg-blue-600 text-white" : "text-gray-700 hover:bg-gray-100"}
-        `;
-    };
+    const navLinkClass = ({ isActive }: { isActive: boolean }) =>
+        `flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+            isActive ? "bg-blue-600 text-white" : "text-gray-700 hover:bg-gray-100"
+        }`;
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -17,19 +16,16 @@ export function Layout() {
                             <Wallet className="text-blue-600" size={32} />
                             <h1 className="text-2xl font-bold text-gray-900">Budżet Domowy</h1>
                         </div>
-
                         <div className="flex gap-2">
-                            <NavLink to="/dashboard" className={navLinkClass}>
+                            <NavLink to="/" className={navLinkClass}>
                                 <LayoutDashboard size={20} />
                                 <span className="font-medium">Dashboard</span>
                             </NavLink>
-
-                            <NavLink to="/dashboard" className={navLinkClass}>
+                            <NavLink to="/transactions" className={navLinkClass}>
                                 <Receipt size={20} />
-                                <span className="font-medium">Paragony</span>
+                                <span className="font-medium">Transakcje</span>
                             </NavLink>
-
-                            <NavLink to="/dashboard" className={navLinkClass}>
+                            <NavLink to="/categories" className={navLinkClass}>
                                 <FolderOpen size={20} />
                                 <span className="font-medium">Kategorie</span>
                             </NavLink>
