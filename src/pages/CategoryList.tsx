@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { Plus, ArrowUpAZ, ArrowDownAZ } from "lucide-react";
-import { store } from "../../flux/Store";
-import { actions } from "../../flux/actions";
-import { CategoryItem } from "./CategoryItem";
-import { CategoryForm } from "./CategoryForm";
-import { Button } from "../Button";
-import { type Category } from "../../services/Api";
+import { store } from "../flux/Store";
+import { actions } from "../flux/actions";
+import { CategoryItem } from "../components/categories/CategoryItem";
+import { CategoryForm } from "../components/categories/CategoryForm";
+import { Button } from "../components/Button";
+import { type Category } from "../services/Api";
 
 export function CategoryList() {
     const [state, setState] = useState(store.getState());
@@ -15,13 +15,9 @@ export function CategoryList() {
 
     useEffect(() => {
         const handleChange = () => setState(store.getState());
-
         store.addChangeListener(handleChange);
         actions.fetchCategories();
-
-        return () => {
-            store.removeChangeListener(handleChange);
-        };
+        return () => store.removeChangeListener(handleChange);
     }, []);
 
     const handleAdd = () => {
@@ -40,14 +36,14 @@ export function CategoryList() {
         } else {
             await actions.addCategory(data);
         }
-
         setShowForm(false);
         setEditingCategory(null);
     };
 
-    const handleDelete = () => {
-        setShowForm(false);
-        setEditingCategory(null);
+    const handleDelete = async (id: string) => {
+        if (window.confirm("Czy na pewno chcesz usunąć tę kategorię?")) {
+            await actions.deleteCategory(id);
+        }
     };
 
     const handleCancel = () => {
@@ -83,12 +79,12 @@ export function CategoryList() {
                         variant="secondary"
                         className="flex items-center gap-2"
                     >
-                        {sortOrder === "asc" ? <ArrowUpAZ size={18} /> : <ArrowDownAZ size={18} />}{" "}
+                        {sortOrder === "asc" ? <ArrowUpAZ size={18} /> : <ArrowDownAZ size={18} />}
                         Sortuj
                     </Button>
-
                     <Button onClick={handleAdd} className="flex items-center gap-2">
-                        <Plus size={18} /> Dodaj kategorię
+                        <Plus size={18} />
+                        Dodaj kategorię
                     </Button>
                 </div>
             </div>
@@ -107,13 +103,15 @@ export function CategoryList() {
             )}
 
             <div className="space-y-3">
-                {sortedCategories.length === 3 ? (
-                    <div className="text-center py-12 text-gray-500">Brak kategorii.</div>
+                {sortedCategories.length === 0 ? (
+                    <div className="text-center py-12 text-gray-500">
+                        Brak kategorii. Dodaj pierwszą kategorię!
+                    </div>
                 ) : (
-                    sortedCategories.map((c) => (
+                    sortedCategories.map((category) => (
                         <CategoryItem
-                            key={c.id}
-                            category={c}
+                            key={category.id}
+                            category={category}
                             onEdit={handleEdit}
                             onDelete={handleDelete}
                         />

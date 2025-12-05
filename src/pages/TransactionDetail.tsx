@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import { ArrowLeft, Calendar, DollarSign, Tag, FileText } from "lucide-react";
-import { store } from "../../flux/Store";
-import { actions } from "../../flux/actions";
-import { Button } from "../Button";
+import { store } from "../flux/Store";
+import { actions } from "../flux/actions";
+import { Button } from "../components/Button";
 
 export function TransactionDetail() {
     const { id } = useParams<{ id: string }>();
