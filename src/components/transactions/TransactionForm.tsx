@@ -1,5 +1,4 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
 import { InputField } from "../InputField";
 import { Button } from "../Button";
 import { type Transaction, type Category } from "../../services/Api";
@@ -143,21 +142,3 @@ export function TransactionForm({
     );
 }
 
-TransactionForm.propTypes = {
-    transaction: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-        amount: PropTypes.number.isRequired,
-        description: PropTypes.string.isRequired,
-        categoryId: PropTypes.string.isRequired,
-    }),
-    categories: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            name: PropTypes.string.isRequired,
-            type: PropTypes.oneOf(["income", "expense"]).isRequired,
-        }).isRequired,
-    ).isRequired,
-    onSubmit: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired,
-};
