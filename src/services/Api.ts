@@ -1,5 +1,8 @@
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+
+// AXIOS npm install axios
+
 export interface Category {
     id: string;
     name: string;
