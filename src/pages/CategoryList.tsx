@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import { Plus, ArrowUpAZ, ArrowDownAZ } from "lucide-react";
 import { store } from "../flux/Store";
 import { actions } from "../flux/actions";
@@ -8,6 +9,7 @@ import { Button } from "../components/Button";
 import { type Category } from "../services/Api";
 
 export function CategoryList() {
+    const navigate = useNavigate();
     const [state, setState] = useState(store.getState());
     const [showForm, setShowForm] = useState(false);
     const [editingCategory, setEditingCategory] = useState<Category | null>(null);
@@ -21,8 +23,7 @@ export function CategoryList() {
     }, []);
 
     const handleAdd = () => {
-        setEditingCategory(null);
-        setShowForm(true);
+        navigate("/categories/add");
     };
 
     const handleEdit = (category: Category) => {

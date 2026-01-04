@@ -26,8 +26,7 @@ export function TransactionList() {
     }, []);
 
     const handleAdd = () => {
-        setEditingTransaction(null);
-        setShowForm(true);
+        navigate("/transactions/add");
     };
 
     const handleEdit = (transaction: Transaction) => {

@@ -1,4 +1,4 @@
-
+import PropTypes from 'prop-types';
 
 interface ButtonProps {
     children: React.ReactNode;
@@ -38,3 +38,11 @@ export function Button({
     );
 }
 
+Button.propTypes = {
+    children: PropTypes.node.isRequired,
+    onClick: PropTypes.func,
+    type: PropTypes.oneOf(["button", "submit", "reset"]),
+    variant: PropTypes.oneOf(["primary", "secondary", "danger"]),
+    disabled: PropTypes.bool,
+    className: PropTypes.string,
+};

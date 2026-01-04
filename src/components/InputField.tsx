@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 interface InputFieldProps {
     label: string;
     type?: string;
@@ -40,3 +42,15 @@ export function InputField({
         </div>
     );
 }
+
+InputField.propTypes = {
+    label: PropTypes.string.isRequired,
+    type: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    onChange: PropTypes.func.isRequired,
+    error: PropTypes.string,
+    placeholder: PropTypes.string,
+    required: PropTypes.bool,
+    min: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    max: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+};

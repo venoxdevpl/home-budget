@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from 'prop-types';
 import { InputField } from "../InputField";
 import { Button } from "../Button";
 import { type Category } from "../../services/Api";
@@ -86,4 +87,12 @@ export function CategoryForm({ category, onSubmit, onCancel }: CategoryFormProps
     );
 }
 
-
+CategoryForm.propTypes = {
+    category: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        type: PropTypes.oneOf(["income", "expense"]).isRequired,
+    }),
+    onSubmit: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
+};
