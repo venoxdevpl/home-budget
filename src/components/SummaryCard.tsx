@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 interface SummaryCardProps {
     title: string;
     value: number;
@@ -42,9 +40,4 @@ export function SummaryCard({ title, value, type = "balance", icon }: SummaryCar
     );
 }
 
-SummaryCard.propTypes = {
-    title: PropTypes.string.isRequired,
-    value: PropTypes.number.isRequired,
-    type: PropTypes.oneOf(["income", "expense", "balance"]),
-    icon: PropTypes.node,
-};
+

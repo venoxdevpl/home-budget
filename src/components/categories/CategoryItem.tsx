@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Pencil, Trash2 } from "lucide-react";
 import { type Category } from "../../services/Api";
 import { Button } from "../Button";
@@ -38,12 +37,3 @@ export function CategoryItem({ category, onEdit, onDelete }: CategoryItemProps) 
     );
 }
 
-CategoryItem.propTypes = {
-    category: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.oneOf(["income", "expense"]).isRequired,
-    }).isRequired,
-    onEdit: PropTypes.func.isRequired,
-    onDelete: PropTypes.func.isRequired,
-};

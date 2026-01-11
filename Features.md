@@ -127,19 +127,34 @@ Komponenty prezentacyjne (stateless):
 
 Komponenty kontenerowe: <TransactionList />, <TransactionForm />, <CategoryList />, <CategoryForm />, <Dashboard />
 
-10. Weryfikacja typów danych PropTypes
+10. Weryfikacja typów danych (TypeScript)
 
-string
+Projekt wykorzystuje TypeScript do statycznej weryfikacji typów podczas kompilacji.
+Zdefiniowane interfejsy i typy:
 
-number
+-   `Category` - obiekt kategorii (id: string, name: string, type: "income" | "expense")
+-   `Transaction` - obiekt transakcji (id: string, date: string, amount: number, description: string, categoryId: string)
+-   `StoreState` - stan aplikacji Flux
 
-bool
+Typy props dla komponentów:
 
-object
+-   `ButtonProps` - children: ReactNode, onClick?: func, type?: string, variant?: string, disabled?: bool
+-   `InputFieldProps` - label: string, value?: string|number, onChange: func, error?: string
+-   `SummaryCardProps` - title: string, value: number, type?: string, icon?: ReactNode
+-   `CategoryItemProps` - category: Category, onEdit: func, onDelete: func
+-   `CategoryFormProps` - category?: Category, onSubmit: func, onCancel: func
+-   `TransactionItemProps` - transaction: Transaction, category?: Category, callbacks: func
+-   `TransactionFormProps` - transaction?: Transaction, categories: Category[], callbacks: func
 
-array
+Weryfikowane typy:
 
-złożone: arrayOf( shape({...}) )
+-   string (np. name, description, id)
+-   number (np. amount, value)
+-   boolean (np. disabled, required)
+-   object (np. Category, Transaction)
+-   array (np. Category[], Transaction[])
+-   union types (np. "income" | "expense")
+-   optional types (np. error?: string)
 
 11. Dwukierunkowa komunikacja między komponentami
     Przykłady:

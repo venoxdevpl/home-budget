@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Pencil, Trash2, Eye } from "lucide-react";
 import { type Transaction, type Category } from "../../services/Api";
 
@@ -82,21 +81,3 @@ export function TransactionItem({
         </div>
     );
 }
-
-TransactionItem.propTypes = {
-    transaction: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-        amount: PropTypes.number.isRequired,
-        description: PropTypes.string.isRequired,
-        categoryId: PropTypes.string.isRequired,
-    }).isRequired,
-    category: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.oneOf(["income", "expense"]).isRequired,
-    }),
-    onEdit: PropTypes.func.isRequired,
-    onDelete: PropTypes.func.isRequired,
-    onView: PropTypes.func.isRequired,
-};
