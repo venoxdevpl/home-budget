@@ -41,7 +41,7 @@ export function CategoryForm({ category, onSubmit, onCancel }: CategoryFormProps
                 onChange={setName}
                 error={errors.name}
                 placeholder="Np. Jedzenie, Rachunki"
-                required={true}
+                required
             />
 
             <div className="mb-4">

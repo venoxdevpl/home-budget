@@ -1,0 +1,30 @@
+{
+  "categories": [
+    {
+      "id": "1768149191300",
+      "name": "Jedzenie",
+      "type": "expense"
+    },
+    {
+      "id": "1768149197485",
+      "name": "Praca",
+      "type": "income"
+    }
+  ],
+  "transactions": [
+    {
+      "id": "1768149213984",
+      "date": "2026-01-11",
+      "amount": 5500,
+      "description": "Wypłata",
+      "categoryId": "1768149197485"
+    },
+    {
+      "id": "1768149236917",
+      "date": "2026-01-11",
+      "amount": 3000,
+      "description": "zakupy",
+      "categoryId": "1768149191300"
+    }
+  ]
+}
