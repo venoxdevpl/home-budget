@@ -82,7 +82,6 @@ export function TransactionForm({
                 value={date}
                 onChange={setDate}
                 error={errors.date}
-                max={new Date().toISOString().split("T")[0]}
                 required
             />
 
@@ -94,6 +93,7 @@ export function TransactionForm({
                 error={errors.amount}
                 placeholder="Np. 100.00"
                 min="0.01"
+                step="0.01"
                 required
             />
 
@@ -116,7 +116,6 @@ export function TransactionForm({
                     className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all ${
                         errors.categoryId ? "border-red-500" : "border-gray-300"
                     }`}
-                    required
                 >
                     <option value="">Wybierz kategorię</option>
                     {categories.map((category) => (

@@ -1,7 +1,11 @@
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+import axios from "axios";
 
-
-// AXIOS npm install axios
+const api = axios.create({
+    baseURL: "http://localhost:3001",
+    headers: {
+        "Content-Type": "application/json",
+    },
+});
 
 export interface Category {
     id: string;
@@ -17,125 +21,67 @@ export interface Transaction {
     categoryId: string;
 }
 
-const CATEGORIES_KEY = "budget_categories";
-const TRANSACTIONS_KEY = "budget_transactions";
-
-const initData = () => {
-    if (!localStorage.getItem(CATEGORIES_KEY)) {
-        const defaultCategories: Category[] = [
-            { id: "1", name: "Wynagrodzenie", type: "income" },
-            { id: "2", name: "Jedzenie", type: "expense" },
-            { id: "3", name: "Rachunki", type: "expense" },
-            { id: "4", name: "Transport", type: "expense" },
-        ];
-
-        localStorage.setItem(CATEGORIES_KEY, JSON.stringify(defaultCategories));
-    }
-
-    if (!localStorage.getItem(TRANSACTIONS_KEY)) {
-        const defaultTransactions: Transaction[] = [
-            { id: "1", date: "2025-12-01", amount: 5000, description: "Pensja", categoryId: "1" },
-            {
-                id: "2",
-                date: "2025-12-02",
-                amount: 200,
-                description: "Zakupy spożywcze",
-                categoryId: "2",
-            },
-            {
-                id: "3",
-                date: "2025-12-03",
-                amount: 350,
-                description: "Prąd i gaz",
-                categoryId: "3",
-            },
-        ];
-        localStorage.setItem(TRANSACTIONS_KEY, JSON.stringify(defaultTransactions));
-    }
-};
-
-initData();
-
 export const API = {
     categories: {
         async all(): Promise<Category[]> {
-            await delay(300);
-            const data = localStorage.getItem(CATEGORIES_KEY);
-            return data ? JSON.parse(data) : [];
+            const response = await api.get<Category[]>("/categories");
+            return response.data;
         },
 
         async create(category: Omit<Category, "id">): Promise<Category> {
-            await delay(300);
-            const categories = await this.all();
-            const newCategory: Category = {
+            const newCategory = {
                 ...category,
                 id: Date.now().toString(),
             };
-
-            categories.push(newCategory);
-            localStorage.setItem(CATEGORIES_KEY, JSON.stringify(categories));
-            return newCategory;
+            const response = await api.post<Category>("/categories", newCategory);
+            return response.data;
         },
 
         async update(id: string, updates: Partial<Omit<Category, "id">>): Promise<Category> {
-            await delay(300);
-            const categories = await this.all();
-            const index = categories.findIndex((c) => c.id === id);
-
-            if (index === -1) throw new Error("Category not found.");
-            categories[index] = { ...categories[index], ...updates };
-            localStorage.setItem(CATEGORIES_KEY, JSON.stringify(categories));
-            return categories[index];
+            const response = await api.patch<Category>(`/categories/${id}`, updates);
+            return response.data;
         },
 
         async delete(id: string): Promise<void> {
-            await delay(300);
-            const categories = await this.all();
-            const filtered = categories.filter((c) => c.id !== id);
-            localStorage.setItem(CATEGORIES_KEY, JSON.stringify(filtered));
+            await api.delete(`/categories/${id}`);
         },
     },
 
     transactions: {
         async all(): Promise<Transaction[]> {
-            await delay(300);
-            const data = localStorage.getItem(TRANSACTIONS_KEY);
-            return data ? JSON.parse(data) : [];
+            const response = await api.get<Transaction[]>("/transactions");
+            return response.data;
         },
 
         async getById(id: string): Promise<Transaction | undefined> {
-            await delay(300);
-            const transactions = await this.all();
-            return transactions.find((t) => t.id === id);
+            try {
+                const response = await api.get<Transaction>(`/transactions/${id}`);
+                return response.data;
+            } catch (error) {
+                if (axios.isAxiosError(error) && error.response?.status === 404) {
+                    return undefined;
+                }
+                throw error;
+            }
         },
 
         async create(transaction: Omit<Transaction, "id">): Promise<Transaction> {
-            await delay(300);
-            const transactions = await this.all();
-            const newTransaction: Transaction = {
+            const newTransaction = {
                 ...transaction,
                 id: Date.now().toString(),
             };
-            transactions.push(newTransaction);
-            localStorage.setItem(TRANSACTIONS_KEY, JSON.stringify(transactions));
-            return newTransaction;
+            const response = await api.post<Transaction>("/transactions", newTransaction);
+            return response.data;
         },
 
         async update(id: string, updates: Partial<Omit<Transaction, "id">>): Promise<Transaction> {
-            await delay(300);
-            const transactions = await this.all();
-            const index = transactions.findIndex((t) => t.id === id);
-            if (index === -1) throw new Error("Transaction not found");
-            transactions[index] = { ...transactions[index], ...updates };
-            localStorage.setItem(TRANSACTIONS_KEY, JSON.stringify(transactions));
-            return transactions[index];
+            const response = await api.patch<Transaction>(`/transactions/${id}`, updates);
+            return response.data;
         },
 
         async delete(id: string): Promise<void> {
-            await delay(300);
-            const transactions = await this.all();
-            const filtered = transactions.filter((t) => t.id !== id);
-            localStorage.setItem(TRANSACTIONS_KEY, JSON.stringify(filtered));
+            await api.delete(`/transactions/${id}`);
         },
     },
 };
+

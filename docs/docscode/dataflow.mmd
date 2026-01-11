@@ -1,0 +1,18 @@
+flowchart LR
+    subgraph Frontend
+        UI[Komponenty UI]
+        Store[Store]
+        Actions[Actions]
+    end
+
+    subgraph Backend
+        JSONServer[JSON Server]
+        DB[(db.json)]
+    end
+
+    UI -->|"wywoluje"| Actions
+    Actions -->|"HTTP request"| JSONServer
+    JSONServer -->|"CRUD"| DB
+    JSONServer -->|"HTTP response"| Actions
+    Actions -->|"dispatch"| Store
+    Store -->|"emitChange"| UI

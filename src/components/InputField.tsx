@@ -8,6 +8,7 @@ interface InputFieldProps {
     required?: boolean;
     min?: string | number;
     max?: string | number;
+    step?: string | number;
 }
 
 export function InputField({
@@ -20,6 +21,7 @@ export function InputField({
     required = false,
     min,
     max,
+    step,
 }: InputFieldProps) {
     return (
         <div className="mb-4">
@@ -31,9 +33,9 @@ export function InputField({
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
                 placeholder={placeholder}
-                required={required}
                 min={min}
                 max={max}
+                step={step}
                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all ${error ? "border-red-500" : "border-gray-300"}`}
             />
             {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
