@@ -1,0 +1,25 @@
+graph TD
+    App[App] --> RouterProvider
+    RouterProvider --> Layout
+
+    Layout --> Dashboard
+    Layout --> TransactionList
+    Layout --> TransactionAdd
+    Layout --> TransactionDetail
+    Layout --> CategoryList
+    Layout --> CategoryAdd
+
+    Dashboard --> SummaryCard
+
+    TransactionList --> TransactionItem
+    TransactionList --> TransactionForm
+    TransactionAdd --> TransactionForm
+
+    CategoryList --> CategoryItem
+    CategoryList --> CategoryForm
+    CategoryAdd --> CategoryForm
+
+    TransactionForm --> InputField
+    TransactionForm --> Button
+    CategoryForm --> InputField
+    CategoryForm --> Button

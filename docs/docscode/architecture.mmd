@@ -1,0 +1,68 @@
+graph TB
+    subgraph Router["Router (react-router)"]
+        direction TB
+        R["/"] --> Layout
+    end
+
+    subgraph Layout["Layout"]
+        direction TB
+        L[Layout] --> |Outlet| Pages
+    end
+
+    subgraph Pages["Strony (Pages)"]
+        direction TB
+        Dashboard[Dashboard]
+        TransactionList[TransactionList]
+        TransactionAdd[TransactionAdd]
+        TransactionDetail[TransactionDetail]
+        CategoryList[CategoryList]
+        CategoryAdd[CategoryAdd]
+    end
+
+    subgraph SharedComponents["Komponenty wspoldzielone"]
+        Button[Button]
+        InputField[InputField]
+        SummaryCard[SummaryCard]
+    end
+
+    subgraph TransactionComponents["Komponenty Transakcji"]
+        TransactionForm[TransactionForm]
+        TransactionItem[TransactionItem]
+    end
+
+    subgraph CategoryComponents["Komponenty Kategorii"]
+        CategoryForm[CategoryForm]
+        CategoryItem[CategoryItem]
+    end
+
+    subgraph FluxArchitecture["Flux Architecture"]
+        Store[Store]
+        Dispatcher[Dispatcher]
+        Actions[Actions]
+    end
+
+    subgraph Services["Serwisy"]
+        API[API - Axios]
+    end
+
+    Dashboard --> SummaryCard
+    TransactionList --> TransactionItem
+    TransactionList --> TransactionForm
+    TransactionAdd --> TransactionForm
+    CategoryList --> CategoryItem
+    CategoryList --> CategoryForm
+    CategoryAdd --> CategoryForm
+
+    TransactionForm --> InputField
+    TransactionForm --> Button
+    CategoryForm --> InputField
+    CategoryForm --> Button
+    TransactionItem --> Button
+    CategoryItem --> Button
+
+    Pages --> Actions
+    Actions --> Dispatcher
+    Dispatcher --> Store
+    Store --> Pages
+
+    Actions --> API

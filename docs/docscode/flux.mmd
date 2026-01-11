@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant Component as Komponent React
+    participant Actions as Actions
+    participant Dispatcher as Dispatcher
+    participant Store as Store
+    participant API as API (Axios)
+
+    Component->>Actions: wywolanie akcji (np. fetchTransactions)
+    Actions->>API: zadanie HTTP
+    API-->>Actions: odpowiedz
+    Actions->>Dispatcher: dispatch(action)
+    Dispatcher->>Store: wykonanie reducera
+    Store-->>Component: emitChange()
+    Component->>Component: setState(store.getState())
